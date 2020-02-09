@@ -1,0 +1,43 @@
+version: "2.3"
+services:
+  bot:
+    build:
+      context: ./bot
+    ports:
+      - "8080:8080"
+    networks:
+      - net
+    environment:
+      BASEURL:
+      BOT_USERNAME:
+      BOT_TOKEN:
+      OIDC_KEYCLOAK_BASEURL:
+      OIDC_KEYCLOAK_CLIENTSECRET:
+      LOGGING_LEVEL_COM_GITHUB_FLIPP5B_TELEGRAMBOTOIDC:
+    depends_on:
+      - tor
+      - keycloak
+
+  keycloak:
+    image: jboss/keycloak:8.0.1
+    ports:
+      - "8180:8080"
+    networks:
+      - net
+    environment:
+      KEYCLOAK_USER:
+      KEYCLOAK_PASSWORD:
+      KEYCLOAK_IMPORT:
+    volumes:
+      - ./keycloak/telegram-bot-oidc.json:/tmp/telegram-bot-oidc.json
+
+  # Tor network is used to access Telegram's servers
+  tor:
+    image: hsaito/torbox
+    expose:
+      - 9050
+    networks:
+      - net
+
+networks:
+  net:
