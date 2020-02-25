@@ -2,7 +2,7 @@
 
 This project demonstrates how to implement authentication in Telegram bot using OpenId Connect (OIDC).
 
-The following tools is using:
+Implementation tools:
 
 - [Keycloak](https://www.keycloak.org) — open source Identity and Access Management solution (OpenId provider).
 - [Spring Boot](https://spring.io/projects/spring-boot) — application framework.
